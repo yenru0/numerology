@@ -1,6 +1,7 @@
 package com.yrkaier.numer
 
 import com.yrkaier.numer.item.One
+import com.yrkaier.numer.util.ItemRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.Item
@@ -20,6 +21,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import org.apache.logging.log4j.LogManager
 import java.util.stream.Collectors
 
+
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("numer")
 class Numer {
@@ -27,8 +30,7 @@ class Numer {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT")
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.registryName)
-        One(Item.Properties(), "dew")
-        GameRegistry.findRegistry(Item::javaClass)
+
     }
 
     private fun doClientStuff(event: FMLClientSetupEvent) {
@@ -67,8 +69,8 @@ class Numer {
     }
 
     companion object {
-        // Directly reference a log4j logger.
         private val LOGGER = LogManager.getLogger()
+        const val MOD_ID: String = "numer";
     }
 
     init {
@@ -80,7 +82,7 @@ class Numer {
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: InterModProcessEvent -> processIMC(event) }
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent -> doClientStuff(event) }
-
+        ItemRegistry()
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this)
     }
